@@ -47,9 +47,12 @@ function findSteps(scheme_id) {
   .where({ scheme_id });
 }
 
-function addStep(stepDescr, scheme_id) {
- console.log(stepDescr, id);
+function findStepById(id) {
  return db('steps')
-  .insert(stepDescr)
-  .where({ scheme_id });
+  .where({ id })
+  .first();
+}
+async function addStep(stepDescr, scheme_id) {
+ const [stepId] = await db('steps').insert({ ...stepDescr, scheme_id });
+ return findStepById(stepId);
 }
